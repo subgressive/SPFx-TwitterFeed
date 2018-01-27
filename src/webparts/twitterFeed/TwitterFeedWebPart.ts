@@ -9,7 +9,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './TwitterFeedWebPart.module.scss';
 import * as strings from 'TwitterFeedWebPartStrings';
 
-var twttr: any = require('twitter');
+var twitter: any = require('twitter');
 
 export interface ITwitterFeedWebPartProps {
   description: string;
@@ -23,7 +23,7 @@ export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFe
       <div class="${ styles.twitterFeed }">
         <div class="${ styles.container }">
           <div class="${ styles.row }">
-            <div class="${ styles.column }">
+            <div class="${ styles.column } ${ this.properties.account }">"
               <span class="${ styles.title }">Welcome to SharePoint!</span>
               <p class="${ styles.subTitle }">Customize SharePoint experiences using Web Parts.</p>
             </div>
@@ -31,14 +31,20 @@ export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFe
         </div>
       </div>`;
 
-      var html = '<a class="twitter-timeline" href="https://twitter.com/subgressive?ref_src=twsrc%5Etfw">Tweets by subgressive</a>';
+      //var currentAccount = ${this.properties.account};
+
+      var html = '<a class="twitter-timeline" href="https://twitter.com/'+this.properties.account+'?ref_src=twsrc%5Etfw">Tweets by '+this.properties.account+'</a>';
       this.domElement.innerHTML = html;
   
-      twttr.widgets.load();
+      twitter.widgets.load();
   }
 
   protected get dataVersion(): Version {
     return Version.parse('1.0');
+  }
+
+  protected get disableReactivePropertyChanges(): boolean {
+    return true;  
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -52,9 +58,6 @@ export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFe
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                }),
                 PropertyPaneTextField('account', {
                   label: strings.AccountFieldLabel
                 })

@@ -18,10 +18,9 @@
     "group": { "default": "Other" },
     "title": { "default": "Twitter Feed" },
     "description": { "default": "Twitter Feed for Modern" },
-    "officeFabricIconFontName": "Bug",
+    "officeFabricIconFontName": "Plane",
     "properties": {
-      "description": "Twitter Feed",
-      "account":"@Subgressive"
+      "account":"Subgressive"
     }
   }]
 }

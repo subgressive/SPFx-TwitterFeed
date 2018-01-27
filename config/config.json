@@ -13,7 +13,7 @@
   },
   "externals": {
     "twitter": {
-      "path": "src/javascripts/twitter/widgets.js",
+      "path": "src/scripts/twitter/widgets.js",
       "globalName": "twttr"
     }
   },
