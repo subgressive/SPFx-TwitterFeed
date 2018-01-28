@@ -18,9 +18,11 @@
     "group": { "default": "Other" },
     "title": { "default": "Twitter Feed" },
     "description": { "default": "Twitter Feed for Modern" },
-    "officeFabricIconFontName": "Plane",
+    "officeFabricIconFontName": "Sunny",    
     "properties": {
-      "account":"Subgressive"
+      "account":"Subgressive",
+      "limit":4,
+      "width":300
     }
   }]
 }

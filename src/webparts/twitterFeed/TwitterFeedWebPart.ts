@@ -2,18 +2,21 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneSlider
 } from '@microsoft/sp-webpart-base';
 import { escape } from '@microsoft/sp-lodash-subset';
 
 import styles from './TwitterFeedWebPart.module.scss';
 import * as strings from 'TwitterFeedWebPartStrings';
 
-var twitter: any = require('twitter');
+var twttr: any = require('twitter');
 
 export interface ITwitterFeedWebPartProps {
   description: string;
   account: string;
+  limit: number;
+  width: number;
 }
 
 export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFeedWebPartProps> {
@@ -23,20 +26,14 @@ export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFe
       <div class="${ styles.twitterFeed }">
         <div class="${ styles.container }">
           <div class="${ styles.row }">
-            <div class="${ styles.column } ${ this.properties.account }">"
-              <span class="${ styles.title }">Welcome to SharePoint!</span>
-              <p class="${ styles.subTitle }">Customize SharePoint experiences using Web Parts.</p>
-            </div>
           </div>
         </div>
       </div>`;
 
-      //var currentAccount = ${this.properties.account};
-
-      var html = '<a class="twitter-timeline" href="https://twitter.com/'+this.properties.account+'?ref_src=twsrc%5Etfw">Tweets by '+this.properties.account+'</a>';
+      var html = '<a class="twitter-timeline" data-chrome="noheader,nofooter" data-tweet-limit="' + this.properties.limit + '" width="' + this.properties.width + '" href="https://twitter.com/'+this.properties.account+'?ref_src=twsrc%5Etfw">Tweets by '+this.properties.account+'</a>';
       this.domElement.innerHTML = html;
   
-      twitter.widgets.load();
+      twttr.widgets.load();
   }
 
   protected get dataVersion(): Version {
@@ -60,6 +57,18 @@ export default class TwitterFeedWebPart extends BaseClientSideWebPart<ITwitterFe
               groupFields: [
                 PropertyPaneTextField('account', {
                   label: strings.AccountFieldLabel
+                }),
+                PropertyPaneSlider('width', {
+                  label: strings.WidthFieldLabel,
+                  min: 80,
+                  max: 400,
+                  step: 10
+                }),
+                PropertyPaneSlider('limit', {
+                  label: strings.LimitFieldLabel,
+                  min: 2,
+                  max: 20,
+                  step: 1
                 })
               ]
             }

@@ -3,6 +3,8 @@ declare interface ITwitterFeedWebPartStrings {
   BasicGroupName: string;
   DescriptionFieldLabel: string;
   AccountFieldLabel: string;
+  LimitFieldLabel: string;
+  WidthFieldLabel: string;
 }
 
 declare module 'TwitterFeedWebPartStrings' {
